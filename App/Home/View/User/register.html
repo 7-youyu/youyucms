@@ -1,0 +1,119 @@
+<extend name="Public/base"/>
+<block name="main">  
+	<div class="main-full">
+        <div class="page-header">
+          <h3>用户注册 <small>User Registration</small></h3>
+        </div>
+        <div class="row">
+          <div class="col-xs-6 col-sm-3">
+            <div class="list-group">
+              <a href="#" class="list-group-item active">注册</a>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-9">
+            <div class="panel panel-default">
+              <div class="panel-body">
+                <h5><span class="glyphicon glyphicon-user" aria-hidden="true"></span> &nbsp;&nbsp;注册信息</h5><hr>
+                <form class="form-horizontal" role="form" style="margin:30px 15% 0 15%;font-size:16px" id="register" action="{:U('User/register')}" method="post" name="form">
+                  <div class="form-group form-group-lg">
+                    <label for="email" class="col-sm-2 control-label">邮箱</label>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control input-lg" name="email" placeholder="请输入邮箱地址">
+                    </div>
+                    
+                  </div>
+                  <div class="form-group form-group-lg">
+                    <label for="username" class="col-sm-2 control-label">昵称</label>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control input-lg" name="username" placeholder="请输入昵称">
+                    </div>
+                    
+                  </div>
+                  <div class="form-group form-group-lg">
+                    <label for="password" class="col-sm-2 control-label">密码</label>
+                    <div class="col-sm-9">
+                      <input type="password" class="form-control input-lg" name="password" placeholder="请输入密码">
+                    </div>
+                    
+                  </div>
+                  <div class="form-group form-group-lg">
+                    <label for="rpassword" class="col-sm-2 control-label">确认密码</label>
+                    <div class="col-sm-9">
+                      <input type="password" class="form-control input-lg" name="rpassword" placeholder="确认密码">
+                    </div>
+                    
+                  </div>
+                  <div class="form-group form-group-lg">
+                    <label for="verify" class="col-sm-2 control-label">验证码</label>
+                    <div class="col-sm-4">
+                      <input type="text" class="form-control input-lg" name="verify" placeholder="请输入验证码">
+                    </div>
+                    <div class="col-sm-5">
+                      <img src="{:U('User/verify')}" class="verifyimg reloadverify" alt="点击切换">
+                    </div>
+                  </div>
+                  <div class="form-group form-group-lg">
+                    <div class="col-sm-offset-2 col-sm-10">
+                      <div class="checkbox">
+                        <label>
+                          <input type="checkbox" id="check"> 我已经认真阅读并同意<a href="">《使用协议》</a>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-5">
+                      <button type="submit" class="btn btn-primary btn-lg">注册</button>&nbsp;&nbsp;
+                      <a href="{:U('user/login')}" class="btn btn-default btn-lg">返回登陆</a>
+                    </div>
+                    <div class="check-tips col-sm-5 text-danger control-label" style="text-align:left;font-size:18px"></div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+</block>
+<block name="script">
+  <script type="text/javascript">
+
+      $("form[name=form]").submit(function(e){
+        var check = $("#check").is(":checked")? 1 : 0;
+        if (!check){
+
+          manhuaTip('error','请勾选我已经认真阅读并同意《使用协议》');
+          e.preventDefault();
+          return ;
+        }
+        var self = $(this);
+        $.post(self.attr("action"), self.serialize(), success, "json");
+        return false;
+        function success(data){
+          if(data.status){
+              manhuaTip('succ',data.info);
+              window.location.href = data.url;
+          } else {
+              manhuaTip('error',data.info);
+              $(".reloadverify").click();
+          }
+        }
+        
+      });
+
+    $(function(){
+      //初始化选中用户名输入框
+      $("#register").find("input[name=email]").focus();
+      //刷新验证码
+      var verifyimg = $(".verifyimg").attr("src");
+            $(".reloadverify").click(function(){
+                if( verifyimg.indexOf('?')>0){
+                    $(".verifyimg").attr("src", verifyimg+'&random='+Math.random());
+                }else{
+                    $(".verifyimg").attr("src", verifyimg.replace(/\?.*$/,'')+'?'+Math.random());
+                }
+            });
+
+    });
+  </script>
+</block> 

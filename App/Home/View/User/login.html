@@ -1,0 +1,74 @@
+<extend name="Public/base"/>
+<block name="main">  
+	<div class="main-full">
+        <div class="page-header">
+          <h3>用户登陆 <small>User Login</small></h3>
+        </div>
+        <div class="row">
+          <div class="col-xs-6 col-sm-3">
+            <div class="list-group">
+              <a href="#" class="list-group-item active">登陆</a>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-9">
+            <div class="panel panel-default">
+              <div class="panel-body">
+                <h5><span class="glyphicon glyphicon-user" aria-hidden="true"></span> &nbsp;&nbsp;登陆信息</h5><hr>
+                <form class="form-horizontal" role="form" style="margin:30px 15% 0 15%;font-size:16px" id="login" action="{:U('User/login')}" method="post" name="form">
+                  <div class="form-group form-group-lg">
+                    <label for="email" class="col-sm-2 control-label">邮箱</label>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control input-lg" name="email" placeholder="请输入邮箱地址">
+                    </div>
+                    
+                  </div>
+                  <div class="form-group form-group-lg">
+                    <label for="password" class="col-sm-2 control-label">密码</label>
+                    <div class="col-sm-9">
+                      <input type="password" class="form-control input-lg" name="password" placeholder="请输入密码">
+                    </div>
+                  </div>
+               
+                  <div class="form-group form-group-lg">
+                    <div class="col-sm-offset-2 col-sm-10">
+                      <div class="checkbox">
+                        <label>
+                          <input type="checkbox" name="remember"> 记住我
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-5">
+                      <button type="submit" class="btn btn-success btn-lg">登陆</button>&nbsp;&nbsp;
+                      <a href="{:U('user/register')}" class="btn btn-link btn-lg">注册</a>
+                    </div>
+                    <div class="check-tips col-sm-5 text-danger control-label" style="text-align:left;font-size:18px"></div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+</block>
+<block name="script">
+  <script type="text/javascript">
+
+      $("form[name=form]").submit(function(){
+        var self = $(this);
+        $.post(self.attr("action"), self.serialize(), success, "json");
+        return false;
+
+        function success(data){
+          if(data.status){
+              manhuaTip('succ',data.info);
+              window.location.href = data.url;
+          } else {
+              manhuaTip('error',data.info);
+          }
+        }
+      });
+
+  </script>
+</block> 

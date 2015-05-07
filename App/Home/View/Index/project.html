@@ -1,0 +1,29 @@
+<extend name="Public/base"/>
+<block name="main">  
+  <div class="main-full">
+    <div class="page-header">
+      <h3>项目成果 <small>Project Results</small></h3>
+    </div>
+    <volist name="list" id="list" mod="2" >
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="project-img <eq name="mod" value="1">pull-right<else/>pull-left</eq>">
+          <a href="__ROOT__{$list.cover_id|get_cover}" target="_blank"><img src="__ROOT__{$list.cover_id|get_cover}" class="img-rounded img-responsive" alt=""></a>
+        </div>
+        <div class="project-text <eq name="mod" value="1">pull-left<else/>pull-right</eq>">
+          <div class="caption">
+            <h3>{$list.title}</h3>
+            <p style="height:200px">{$list.description}</p>
+            <p><a href="{:U('index/document',array('id'=>$list['id']))}" class="btn btn-primary" role="button">详细</a> <notempty name="list.show_url"> <a href="{$list.show_url}" class="btn btn-default" role="button">演示地址</a></notempty></p>
+          </div>
+        </div>
+        <div class="clear"></div>
+      </div>
+    </div>
+    </volist>
+
+    <div class="project-foot">
+        {$_page}
+    </div>
+  </div>
+</block>

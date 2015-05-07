@@ -1,0 +1,110 @@
+ <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>实验室管理系统后台</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="__STATIC__/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="__CSS__/sb-admin.css" rel="stylesheet">
+
+    <!-- Morris Charts CSS -->
+    <link href="__CSS__/plugins/morris.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="__FONT__/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+
+    <div id="login">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">后台登陆</h3>
+          </div>
+          <div class="panel-body">
+            <br>
+            <form class="form-horizontal" role="form" name="form" action="{:U('public/login')}">
+              <div class="form-group" method="post">
+                <div class="col-sm-1"></div>
+                <label for="email" class="col-sm-2 control-label"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></label>
+                <div class="col-sm-7">
+                  <input type="text" class="form-control" name="email" placeholder="请输入邮箱地址">
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-1"></div>
+                <label for="password" class="col-sm-2 control-label"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></label>
+                <div class="col-sm-7">
+                  <input type="password" class="form-control" name="password" placeholder="请输入密码">
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-offset-3 col-sm-7">
+                  <div class="checkbox">
+                    <label>
+                      <input type="checkbox"> 记住我
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-offset-3 col-sm-2">
+                  <button type="submit" class="btn btn-primary">登陆</button>
+                </div>
+                <div class="col-sm-7 control-label text-danger check-tips" style="text-align:left;"></div>
+              </div>
+            </form>
+
+          </div>
+        </div>
+    </div>
+    <!-- /#wrapper -->
+    <!-- jQuery -->
+    <script src="__STATIC__/js/jquery-1.11.2.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="__STATIC__/js/bootstrap.min.js"></script>
+
+    <!-- Morris Charts JavaScript -->
+    <script src="__JS__/plugins/morris/raphael.min.js"></script>
+    <script src="__JS__/plugins/morris/morris.min.js"></script>
+    <script src="__JS__/plugins/morris/morris-data.js"></script>
+    <script type="text/javascript">
+
+        $("form[name=form]").submit(function(){
+          var self = $(this);
+          $.post(self.attr("action"), self.serialize(), success, "json");
+          return false;
+
+          function success(data){
+            if(data.status){
+              window.location.href = data.url;
+            } else {
+              self.find(".check-tips").text(data.info);
+            }
+          }
+        });
+
+      $(function(){
+        $("#login").find("input[name=email]").focus();
+      });
+    </script>
+</body>
+
+</html>

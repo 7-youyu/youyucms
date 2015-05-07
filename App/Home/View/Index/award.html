@@ -1,0 +1,85 @@
+<extend name="Public/base"/>
+<block name="main">  
+  <div class="main-full">
+    <div class="page-header">
+      <h3>奖章奖项 <small>Medal Award</small></h3>
+    </div>
+    <div class="award">
+      <div class="award-head"><h5></h5></div>
+      <volist name="result" id="menu">
+        <div class="award-main">
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title"><span class="glyphicon glyphicon-star" aria-hidden="true"></span>&nbsp;&nbsp;{$menu.name}</h3>
+            </div>
+            <div class="panel-body">
+              <div class="row">
+                <volist name="menu.child" id="child">
+                  <div class="col-lg-3">
+                    <a href="__ROOT__{$child.cover_id|get_cover}" target="_blank" rel="__ROOT__{$child.cover_id|get_cover}" class="preview"><img class="img-thumbnail img-responsive" src="__ROOT__{$child.cover_id|get_cover}" alt="image"></a>
+                    <p><strong>{$child.title}</strong></p>
+                    <p>{$child.username}</p>
+                  </div>
+                </volist>
+              </div><!-- /.row -->
+            </div>
+          </div>
+        </div>
+      </volist>
+    </div>
+  </div>
+</block>
+<block name="script">
+  <script>
+      this.imagePreview = function(){ 
+        /* CONFIG */
+          
+          xOffset = 10;
+          yOffset = 30;
+          
+          // these 2 variable determine popup's distance from the cursor
+          // you might want to adjust to get the right result
+          
+        /* END CONFIG */
+        $("a.preview").hover(function(e){
+          this.t = this.title;
+          this.title = "";  
+          var c = (this.t != "") ? "<br/>" + this.t : "";
+          $("body").append("<div id='preview'><img src='"+ this.rel +"' alt='Image preview' />"+ c +"</div>");                 
+          if (e.pageX < $(window).width()/2) {
+            $("#preview")
+              .css("top",(e.pageY - xOffset) + "px")
+              .css("left",(e.pageX + yOffset) + "px")
+              .fadeIn("fast");            
+          }else{
+            $("#preview")
+              .css("top",(e.pageY - xOffset) + "px")
+              .css("right",($(window).width()-e.pageX + yOffset) + "px")
+              .fadeIn("fast");      
+          }
+
+          },
+        function(){
+          this.title = this.t;  
+          $("#preview").remove();
+          }); 
+        $("a.preview").mousemove(function(e){
+          if (e.pageX < $(window).width()/2) {
+            $("#preview")
+              .css("top",(e.pageY - xOffset) + "px")
+              .css("left",(e.pageX + yOffset) + "px");         
+          }else{
+            $("#preview")
+              .css("top",(e.pageY - xOffset) + "px")
+              .css("right",($(window).width()-e.pageX + yOffset) + "px");
+          }
+        });     
+      };
+
+
+      // starting the script on page load
+      $(document).ready(function(){
+        imagePreview();
+      });
+  </script>
+</block>

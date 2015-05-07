@@ -1,0 +1,53 @@
+<extend name="Public/base"/>
+<block name="main">  
+  <div class="main-full">
+    <div class="page-header">
+      <h3>新闻公告 <small>News Bulletin</small></h3>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-sm-9">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <div class="news-head">
+              <ul class="nav nav-tabs">
+                <volist name="result" id="menu">
+                  <li role="presentation" <eq name="menu['active']" value="1">class="active"</eq>><a href="{$menu['url']|U}">{$menu.name}</a></li>
+                </volist>
+              </ul>
+            </div>
+            <div class="news-main">
+
+              <foreach name="list" item="list" >
+                <div class="news">
+                  <div class="news-body">  
+                    <p class="news-title"><a href="{:U('index/document',array('id'=>$list['id']))}" title="Lavish Post-Modern, Past Retro, Vintage and Hipster Styles in Website Design">{$list.title}</a></p>
+                    <div class="news-summary"> 
+                      <span class="news-category"><a>{$list.menu_id|get_menu}</a></span> 
+                      <span class="news-excerpt"><p>{$list.description}...</p>
+                      </span>
+                      <div class="news-meta">
+                        <span class="news-author"><a href="#" rel="author">{$list.username}</a></span> ·
+                        <span class="news-date">{$list.update_time|time_format}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </foreach>
+            </div>
+            <div class="news-foot">
+              {$_page}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-6 col-sm-3">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            {$sidebar}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</block>
+    

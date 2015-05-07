@@ -1,0 +1,60 @@
+<extend name="Public/base"/>
+<block name="main">  
+  <div class="main-full">
+    <div class="page-header">
+      <h3>交流讨论 <small>Discussion</small></h3>
+    </div>
+    <div class="row">
+      <div class="col-xs-6 col-sm-3">
+        <div class="list-group">
+          <volist name="result" id="menu">
+          <a href="{$menu['url']|U}" class="list-group-item <eq name="menu['active']" value="1">active</eq>">{$menu.name}<span class="badge">{$menu.id|get_menu_doc}</span></a>
+          </volist>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-9">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <div class="discus-head">
+            
+              <div class="pull-left" style="width:80%">
+                <ul class="nav nav-tabs">
+                  <li role="presentation" <eq name="order" value="comment"> class="active"</eq>><a href="?order=comment">最新回复</a></li>
+                  <li role="presentation" <eq name="order" value="update_time"> class="active"</eq>><a href="?order=update_time">最新发表</a></li>
+                  <li role="presentation" <eq name="order" value="position"> class="active"</eq>><a href="?order=position">精品</a></li>
+                </ul> 
+              </div>  
+              <div class="pull-right">
+                <a href="{:U('index/discus_add')}" class="btn btn-danger">发表新文章</a>
+              </div>
+              <div class="clear"></div>
+            </div>
+            <div class="discus-main">
+
+              <volist name="list" id="list">
+                <div class="media">
+                  <a class="media-left" href="#">
+                    <img src="__ROOT__{$list.username|get_username_field_info='cover_id'|get_user_head}" alt="..." class="img-thumbnail">
+                  </a>
+                  <div class="media-body">
+                    <h5 class="media-heading"><a href="{:U('index/discus',array('id'=>$list['menu_id']))}">[ {$list.menu_id|get_menu} ]</a>  <a href="{:U('index/document',array('id'=>$list['id']))}">{$list.title}</a><span>{$list.position|get_dis_position}</span></h5>
+                    <div class="ft">
+                      <span class="pull-right">{$list.update_time|time_format}</span>
+                      <span class="related-info"><small>{$list.username}</small></span>
+                      <span class="related-info"><small>浏览：{$list.view} </small></span>
+                      <span class="related-info"><small>评论：{$list.id|get_comment}</small></span>
+                    </div>
+                  </div>
+                </div>
+
+              </volist>
+            </div>
+            <div class="discus-foot">
+              {$_page}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</block>

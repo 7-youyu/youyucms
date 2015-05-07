@@ -1,0 +1,180 @@
+<extend name="Public/base"/>
+<block name="main">  
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">
+                首页 <small>基本信息</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li class="active">
+                    <i class="fa fa-dashboard"></i> 首页
+                </li>
+            </ol>
+            <div class="row">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-newspaper-o fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge">{$list.news}</div>
+                                        <div>新闻</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="{:U('news/index')}">
+                                <div class="panel-footer">
+                                    <span class="pull-left">View Details</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-green">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-comments fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge">{$list.discus}</div>
+                                        <div>讨论</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="{:U('discus/index')}">
+                                <div class="panel-footer">
+                                    <span class="pull-left">View Details</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-yellow">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-tasks fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge">{$list.comment}</div>
+                                        <div>评论</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="{:U('user/index')}">
+                                <div class="panel-footer">
+                                    <span class="pull-left">View Details</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-red">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-user fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge">{$list.user}</div>
+                                        <div>用户</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="{:U('comment/index')}">
+                                <div class="panel-footer">
+                                    <span class="pull-left">View Details</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+            </div>
+            <div class="row">
+                    <div class="col-lg-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> 系统信息</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="list-group">
+                                    <a href="#" class="list-group-item">
+                                        <span class="pull-right">http://{$_SERVER.SERVER_NAME}__ROOT__/</span>
+                                        访问地址
+                                    </a>
+                                    <a href="#" class="list-group-item">
+                                        <span class="pull-right">{$_SERVER.SERVER_ADDR}:{$_SERVER.SERVER_PORT}</span>
+                                        服务器IP
+                                    </a>
+                                    <a href="#" class="list-group-item">
+                                        <span class="pull-right"><?=THINK_VERSION?></span>
+                                        ThinkPHP版本
+                                    </a>
+                                    <a href="#" class="list-group-item">
+                                        <span class="pull-right"><?=dirname($_SERVER['SCRIPT_FILENAME'])?></span>
+                                        物理路径
+                                    </a>
+                                    <a href="#" class="list-group-item">
+                                        <span class="pull-right"><?php echo get_cfg_var( "max_execution_time") ; ?>秒</span>
+                                        脚本超时
+                                    </a>
+                                    <a href="#" class="list-group-item">
+                                        <span class="pull-right"><?php echo get_cfg_var( "upload_max_filesize")?get_cfg_var( "upload_max_filesize"): "不允许上传文件" ; ?></span>
+                                        上传限制
+                                    </a>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> 版本信息</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="list-group">
+                                    <a href="#" class="list-group-item">
+                                        <span class="pull-right">1.0</span>
+                                        版本
+                                    </a>
+                                    <a href="#" class="list-group-item">
+                                        <span class="pull-right">游渔</span>
+                                        作者
+                                    </a>
+                                    <a href="#" class="list-group-item">
+                                        <span class="pull-right">shang.knight@qq.com</span>
+                                        邮箱
+                                    </a>
+                                    <a href="#" class="list-group-item">
+                                        <span class="pull-right">540346095</span>
+                                        QQ
+                                    </a>
+                                    <a href="#" class="list-group-item">
+                                        <span class="pull-right">http://aincrad.sinaapp.com/</span>
+                                        主页
+                                    </a>
+                                    <a href="#" class="list-group-item">
+                                        <span class="pull-right">http://weibo.com/u/1681195485</span>
+                                        微博
+                                    </a>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</block>
+                

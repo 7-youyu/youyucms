@@ -1,0 +1,114 @@
+<extend name="Public/base"/>
+<block name="style">
+    <link href="__STATIC__/uploadify/uploadify.css" rel="stylesheet">
+</block>
+<block name="main">  
+	<div class="main-full">
+    <script src="__STATIC__/js/jquery-1.11.2.min.js"></script>
+    <script src="__STATIC__/uploadify/jquery.uploadify.min.js?ver=<?php echo rand(0,9999);?>" type="text/javascript"></script>
+        <div class="page-header">
+          <h3>个人中心 <small>Individual Center</small></h3>
+        </div>
+        <div class="row">
+          <div class="col-xs-6 col-sm-3">
+             <div class="panel panel-default">
+                <div class="panel-body">
+                  <div style="width:50%;float:left">
+                      <img class="img-circle" src="__ROOT__{$_SESSION['user']['uid']|get_user_field_info='cover_id'|get_user_head}" alt="Generic placeholder image" style="width:100px;height:100px;">
+                  </div>
+                  <div style="width:50%;float:right">
+                    <h5><span class="glyphicon glyphicon-user" aria-hidden="true"></span> &nbsp;&nbsp;{$_SESSION['user']['username']}</h5>
+                    <h5><span class="glyphicon glyphicon-certificate" aria-hidden="true"></span> &nbsp;&nbsp;积分：0</h5>
+                  </div>
+                </div>
+            </div>
+            <div class="list-group">
+              <a href="{:U('user/user_center')}" class="list-group-item">修改资料</a>
+              <a href="{:U('user/user_head')}" class="list-group-item active">上传头像</a>
+              <a href="{:U('user/user_doc')}" class="list-group-item">发布文章</a>
+              <a href="{:U('user/user_book')}" class="list-group-item">成员专属</a>
+              <a href="{:U('user/user_profile')}" class="list-group-item">修改密码</a>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-9">
+            <div class="panel panel-default">
+              <div class="panel-body">
+                <h5><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> &nbsp;&nbsp;上传头像</h5><hr>
+                <form class="form-horizontal" role="form" style="margin:30px 15% 0 15%;font-size:16px" action="{:U('User/user_head')}" method="post" name="form">
+                  <div class="form-group">
+                    <label for="cover" class="col-sm-3 control-label">上传新头像</label>
+                    <div class="col-sm-3">
+                        <input type="file" id="upload_picture_cover_id">
+                        <input type="hidden" name="cover_id" id="cover_id"/>
+                        <div class="upload-img-box">
+                        <notempty name="info.cover_id">
+                          <div class="upload-pre-item"><img src="__ROOT__{$info.cover_id|get_cover}"/></div>
+                        </notempty>
+                        </div>
+                      <script type="text/javascript">
+                      //上传图片
+                        /* 初始化上传插件 */
+                      // setTimeout(function(){
+
+                      $("#upload_picture_cover_id").uploadify({
+                            "swf"             : "__STATIC__/uploadify/uploadify.swf",
+                            "buttonText"      : "上传图片",
+                            "uploader"        : "{:U('Admin/File/uploadPicture',array('session_id'=>session_id()))}",
+                            'removeTimeout'   : 1,
+                            "onUploadSuccess" : uploadPicturecover_id,
+                            'onFallback' : function() {
+                                alert('未检测到兼容版本的Flash.');
+                            }
+                        });
+                      // },10);
+                      function uploadPicturecover_id(file, data){
+                          var data = $.parseJSON(data);
+                            if(data.status){
+                              $("#cover_id").val(data.id);
+                              $("#cover_id").parent().find('.upload-img-box').html(
+                                '<div class="upload-pre-item"><img src="__ROOT__' + data.path + '"/></div>'
+                              );
+                            } else {
+                              updateAlert(data.info);
+                              setTimeout(function(){
+                                    $('#top-alert').find('button').click();
+                                    $(that).removeClass('disabled').prop('disabled',false);
+                                },1500);
+                            }
+                        }
+                      </script>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <input type="hidden" name="uid" value="{$_SESSION['user']['uid']}">
+                    <div class="col-sm-offset-2 col-sm-5">
+                      <button type="submit" class="btn btn-primary">确认</button>&nbsp;&nbsp;
+                    </div>
+                    <div class="check-tips col-sm-5 text-danger control-label" style="text-align:left;font-size:18px"></div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+</block>
+<block name="script">
+  <script type="text/javascript">
+
+      $("form[name=form]").submit(function(){
+        var self = $(this);
+        $.post(self.attr("action"), self.serialize(), success, "json");
+        return false;
+
+        function success(data){
+          if(data.status){
+              manhuaTip('succ',data.info);
+              window.location.href = data.url;
+          } else {
+              manhuaTip('error',data.info);
+          }
+        }
+      });
+  </script>
+</block> 

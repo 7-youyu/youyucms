@@ -1,0 +1,38 @@
+<extend name="Public/base"/>
+<block name="main">  
+  <div class="main-full">
+    <div class="page-header">
+      <h3>学习资源 <small>Learning Resources</small></h3>
+    </div>
+    <div class="row">
+      <div class="col-xs-6 col-sm-3">
+        <div class="list-group">
+          <volist name="result" id="menu">
+            <a href="{$menu['url']|U}" class="list-group-item <eq name="menu['active']" value="1">active</eq>">{$menu.name}<span class="badge">{$menu.id|get_menu_doc}</span></a>
+          </volist>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-9">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <h5><span class="glyphicon glyphicon-education" aria-hidden="true"></span> &nbsp;&nbsp;全部</h5><hr>
+            <div class="row">
+              <foreach name="list" item="list" >
+                <div class="col-sm-6 col-md-4">
+                  <div class="thumbnail">
+                    <img src="__ROOT__{$list.cover_id|get_cover}" data-holder-rendered="true" style="height: 200px; width: 100%; display: block;">
+                    <div class="caption">
+                      <h3>{$list.title}</h3>
+                      <p>{$list.description}</p>
+                      <p><a href="{:U('index/document',array('id'=>$list['id']))}" class="btn btn-primary" role="button">进入学习</a></p>
+                    </div>
+                  </div>
+                </div>
+              </foreach>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</block>

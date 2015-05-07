@@ -1,0 +1,137 @@
+<extend name="Public/base"/>
+
+<block name="main">
+  <div class="row">
+      <div class="col-lg-12">
+          <h1 class="page-header">
+              系统 <small>网站设置</small>
+          </eq>
+          </h1>
+          <form class="form-horizontal" role="form" id="form" action="{:U('Webset/webset_sub')}" method="post" name="form">
+            <div class="form-group">
+              <label for="WEB_SITE_TITLE" class="col-sm-3 control-label">网站标题</label>
+              <div class="col-sm-3">
+                <input type="text" class="form-control" name="WEB_SITE_TITLE" id="WEB_SITE_TITLE" value="{$list['WEB_SITE_TITLE']|default=''}">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="WEB_SITE_DESCRIPTION" class="col-sm-3 control-label">网站描述</label>
+              <div class="col-sm-3">
+                <textarea class="form-control" rows="2" name="WEB_SITE_DESCRIPTION" id="WEB_SITE_DESCRIPTION">{$list['WEB_SITE_DESCRIPTION']|default=''}</textarea>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="WEB_SITE_KEYWORD" class="col-sm-3 control-label">网站关键字</label>
+              <div class="col-sm-3">
+                <textarea class="form-control" rows="2" name="WEB_SITE_KEYWORD" id="WEB_SITE_KEYWORD">{$list['WEB_SITE_KEYWORD']|default=''}</textarea>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="WEB_SITE_ICP" class="col-sm-3 control-label">网站备案号</label>
+              <div class="col-sm-3">
+                <input type="text" class="form-control" name="WEB_SITE_ICP" id="WEB_SITE_ICP" value="{$list['WEB_SITE_ICP']|default=''}">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="NEWS_SIDEBAR" class="col-sm-3 control-label">新闻侧边栏</label>
+              <div class="col-sm-3">
+                <textarea class="form-control" rows="3" name="NEWS_SIDEBAR" id="NEWS_SIDEBAR">{$list['NEWS_SIDEBAR']|default=''}</textarea>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="DOC_SIDEBAR" class="col-sm-3 control-label">文章侧边栏</label>
+              <div class="col-sm-3">
+                <textarea class="form-control" rows="3" name="DOC_SIDEBAR" id="DOC_SIDEBAR">{$list['DOC_SIDEBAR']|default=''}</textarea>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="WEB_SITE_CLOSE" class="col-sm-3 control-label">站点</label>
+              <div class="col-sm-3">
+                <div class="radio-inline">
+                    <label>
+                        <input type="radio" name="WEB_SITE_CLOSE" value="1" <eq name="list['WEB_SITE_CLOSE']" value="1">checked="checked"</eq>>开启
+                    </label>
+                </div>
+                <div class="radio-inline">
+                    <label>
+                        <input type="radio" name="WEB_SITE_CLOSE" value="0" <eq name="list['WEB_SITE_CLOSE']" value="0">checked="checked"</eq>>关闭
+                    </label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="WEB_REGISTER_CLOSE" class="col-sm-3 control-label">注册</label>
+              <div class="col-sm-3">
+                <div class="radio-inline">
+                    <label>
+                        <input type="radio" name="WEB_REGISTER_CLOSE" value="1" <eq name="list['WEB_REGISTER_CLOSE']" value="1">checked="checked"</eq>>开启
+                    </label>
+                </div>
+                <div class="radio-inline">
+                    <label>
+                        <input type="radio" name="WEB_REGISTER_CLOSE" value="0" <eq name="list['WEB_REGISTER_CLOSE']" value="0">checked="checked"</eq>>关闭
+                    </label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="WEB_COMMENT_CLOSE" class="col-sm-3 control-label">评论</label>
+              <div class="col-sm-3">
+                <div class="radio-inline">
+                    <label>
+                        <input type="radio" name="WEB_COMMENT_CLOSE" value="1" <eq name="list['WEB_COMMENT_CLOSE']" value="1">checked="checked"</eq>>开启
+                    </label>
+                </div>
+                <div class="radio-inline">
+                    <label>
+                        <input type="radio" name="WEB_COMMENT_CLOSE" value="0" <eq name="list['WEB_COMMENT_CLOSE']" value="0">checked="checked"</eq>>关闭
+                    </label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="WEB_VERIFY_CLOSE" class="col-sm-3 control-label">审核</label>
+              <div class="col-sm-3">
+                <div class="radio-inline">
+                    <label>
+                        <input type="radio" name="WEB_VERIFY_CLOSE" value="1" <eq name="list['WEB_VERIFY_CLOSE']" value="1">checked="checked"</eq>>开启
+                    </label>
+                </div>
+                <div class="radio-inline">
+                    <label>
+                        <input type="radio" name="WEB_VERIFY_CLOSE" value="0" <eq name="list['WEB_VERIFY_CLOSE']" value="0">checked="checked"</eq>>关闭
+                    </label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-offset-3 col-sm-1">
+                <button type="submit" class="btn btn-primary">确认</button>
+              </div>
+              <div class="check-tips col-sm-3 text-danger control-label" style="text-align:left"></div>
+            </div>
+          </form>
+      </div>
+  </div>
+  
+</block>
+             
+<block name="script">
+  <script type="text/javascript">
+      $("form[name=form]").submit(function(){
+        var self = $(this);
+        $.post(self.attr("action"), self.serialize(), success, "json");
+        return false;
+
+        function success(data){
+          if(data.status){
+            window.location.href = data.url;
+          } else {
+            self.find(".check-tips").text(data.info);
+          }
+        }
+      });
+
+  </script>
+</block>
+

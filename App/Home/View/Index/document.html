@@ -1,0 +1,99 @@
+<extend name="Public/base"/>
+<block name="main">  
+  <div class="main-full">
+    <div class="row">
+      <div class="col-xs-12 col-sm-9">
+        <div class="panel panel-default document">
+          <div class="panel-body">
+            <div class="document-head">
+              <div class="page-header">
+                <h2 style="color:#323232">{$list.title}</h2>
+              </div>
+              <div class="document-head-bottom">
+                <span class="related-info">浏览：{$list.view}</span>
+                <span class="related-info">发布日期：{$list.create_time|time_format}</span>
+                <span class="related-info">分类：{$list.menu_id|get_up_menu}</span>
+                <span class="related-info">作者：{$list.username}</span>
+                <eq name="list['username']" value="$_SESSION['user']['username']">
+                  <span class="related-info"><a href="{:U('index/document_del',array('id'=>$list['id']))}" onclick="winconfirm()">删除</a></span>
+                </eq>
+              </div>
+            </div> 
+            <div class="document-main" style="color:#323232">
+              <br>
+              {$list.content|htmlspecialchars_decode}
+            </div> 
+            <div class="document-foot">
+            </div>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title"><span class="text-info glyphicon glyphicon-comment" aria-hidden="true"></span>&nbsp;&nbsp;评论</h3>
+          </div>
+          <div class="panel-body">
+            <div class="comment" id="comment_content">
+
+            </div>
+            
+            <div style="text-align: center">{$_page}</div>
+            <div class="comment-sub">
+              <form class="form-horizontal" role="form" id="form" action="{:U('index/comment_sub')}" method="post" name="form">
+                <div class="media">
+                  <a class="media-left" href="#">
+                    <img src="__ROOT__{$_SESSION['user']['uid']|get_user_field_info='cover_id'|get_user_head}" alt="..." class="img-thumbnail">
+                  </a>
+                  <div class="media-body">
+                    <input type="hidden" name="document_id" id="document_id" value="{$list.id}">
+                    <input type="hidden" name="p" id="p" value="{$p}">
+                    <textarea name="comment_content" class="form-control" placeholder="我也来说两句.."></textarea>
+                    
+                    <div class="col-sm-1">
+                      <button type="submit" class="btn btn-sm btn-primary" style="margin-left:-15px">评论</button>
+                    </div>
+                    <div class="check-tips col-sm-3 text-danger control-label" style="text-align:left"></div> 
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-6 col-sm-3">
+        <div class="panel panel-default document">
+          <div class="panel-body">
+            {$sidebar}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</block>
+<block name="script">
+  <script type="text/javascript">
+      $("form[name=form]").submit(function(){
+        var self = $(this);
+        $.post(self.attr("action"), self.serialize(), success, "json");
+        return false;
+
+        function success(data){
+          if(data.status){
+              manhuaTip('succ',data.info);
+              window.location.href = data.url;
+          } else {
+              manhuaTip('error',data.info);
+          }
+        }
+      });
+      $(document).ready(function(){
+        var id = $('#document_id').val();
+        var p = $('#p').val();
+
+        $.get("{:U('index/comment')}" ,{id:id,p:p}, function(data){
+            $('#comment_content').html(data);
+        });
+
+      });
+
+  </script>
+</block>

@@ -1,0 +1,32 @@
+<extend name="Public/base"/>
+<block name="main">  
+  <div class="main-full">
+    <div class="page-header">
+      <h3>历届成员 <small>Previous Members</small></h3>
+    </div>
+    <div class="number">
+      <div class="number-head"><h5>成员排名不分先后</h5></div>
+      <volist name="result" id="menu">
+        <div class="number-main">
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;&nbsp;{$menu.name}</h3>
+            </div>
+            <div class="panel-body">
+              <div class="row">
+                <volist name="menu.child" id="child">
+                  <div class="col-lg-2">
+                    <img class="img-circle" src="__ROOT__{$child.cover_id|get_cover}" alt="Generic placeholder image">
+                    <h2><a href="{$child.show_url|default='#'}" target="_block">{$child.username}</a></h2>
+                    <p>{$child.title}</p>
+                  </div>
+                </volist>
+               
+              </div><!-- /.row -->
+            </div>
+          </div>
+        </div>
+      </volist>
+    </div>
+  </div>
+</block>
